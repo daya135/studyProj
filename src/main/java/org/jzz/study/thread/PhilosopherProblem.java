@@ -1,55 +1,56 @@
 package org.jzz.study.thread;
 
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * @author Merin
- * 使用服务生对象解决哲学家问题，将锁集中在服务生对象上。先获得锁再使用逻辑判断是否满足执行条件。
+ * 使用服务生对象解决哲学家问题，将锁集中在服务生对象上。
  */
-class Philosopher implements Runnable{
-	Integer[] forks; //充当服务生对象，管理所有筷子，同一时间只能有一个人占用服务生
-	int id;
-	Random random;
+//服务生类
+class Waiter {
+	int forks;
+	public Waiter(int init) {
+		this.forks = init;
+	}
 	
-	public Philosopher (Integer[] forks, int id) {
-		this.forks = forks;
+	//直接在服务生对象上定义同步方法，完全移除哲学家内部的同步机制，比较优化
+	//将while循环直接置于这里，并设置wait(),再次精简哲学家内部代码行为
+	public synchronized boolean applyForks() {
+		while (forks < 2) {
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		forks = forks - 2;
+		return true;
+	}
+	public synchronized void returnForks() {
+		forks = forks + 2;
+		notifyAll();
+	}
+}
+//哲学家类
+class Philosopher implements Runnable{
+	Waiter waiter; //充当服务生对象，管理所有筷子，同一时间只能有一个人占用服务生
+	int id;
+	Random random =  new Random(47 + id);
+	
+	public Philosopher (Waiter waiter, int id) {
+		this.waiter = waiter;
 		this.id = id;
-		random = new Random(47 + id);
 	}
 
 	@Override
 	public void run() {
-		while (true) {
+		while (!Thread.interrupted()) {
+			//拿筷子
+			waiter.applyForks();
 			
-			//准备拿筷子，占用服务生
-			synchronized(forks) {
-				if (id % 2 == 0) {	//从左手拿筷子
-					if(forks[id] == 0 && forks[(id + 1) % 5] == 0) {
-						forks[id] = 1;
-						forks[(id + 1) % 5] = 1;
-					} else {
-						//不用wait()程序仍然正确运行！但是！！！性能会有问题，程序会极大占用CPU资源！！
-						try {
-							forks.wait();
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-						continue;
-					}
-				} else {	//从右手拿筷子
-					if(forks[(id + 1) % 5] == 0 && forks[id] == 0 ) {
-						forks[(id + 1) % 5] = 1;
-						forks[id] = 1;
-					} else {
-						try {
-							forks.wait();
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-						continue;
-					}
-				}
-			}
+			//进餐中
 			System.out.println(String.format("哲学家%d进餐中..", id));
 			try {
 				Thread.sleep(1000 + random.nextInt(2000));
@@ -57,25 +58,14 @@ class Philosopher implements Runnable{
 				e.printStackTrace();
 			}
 			
-			System.out.println(String.format("哲学家%d进餐完毕", id));
 			//放筷子
-			synchronized(forks) {
-				if (id % 2 == 0) {
-					forks[id] = 0;
-					forks[(id + 1) % 5] = 0;
-	
-				} else {
-					forks[(id + 1) % 5] = 0;
-					forks[id] = 0;
-				}
-				forks.notifyAll();
-			}
+			System.out.println(String.format("哲学家%d进餐完毕", id));
+			waiter.returnForks();
 			
 			//思考中
 			try {
 				Thread.sleep(1000 + random.nextInt(2000));
 			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
@@ -83,15 +73,13 @@ class Philosopher implements Runnable{
 }
 
 public class PhilosopherProblem {
-	
-	
 	public static void main(String[] args) {
-		Integer[] forks = {0,0,0,0,0}; 
-		Runnable[]  philosophers = {new Philosopher(forks, 0), new Philosopher(forks, 1),
-				new Philosopher(forks, 2), new Philosopher(forks, 3), new Philosopher(forks, 4)};
+		Waiter waiter = new Waiter(5);
+		Runnable[]  philosophers = {new Philosopher(waiter, 0), new Philosopher(waiter, 1),
+				new Philosopher(waiter, 2), new Philosopher(waiter, 3), new Philosopher(waiter, 4)};
+		ExecutorService exec = Executors.newCachedThreadPool();
 		for (Runnable philosopher : philosophers) {
-			Thread thread = new Thread(philosopher);
-			thread.start();
+			exec.execute(philosopher);
 		}
 	}
 	

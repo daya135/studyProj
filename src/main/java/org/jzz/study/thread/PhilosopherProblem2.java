@@ -11,13 +11,12 @@ class Philosopher2 implements Runnable{
 	Integer left; 
 	Integer right;
 	int id;
-	Random random;
+	Random random = new Random(47 + id);
 	
 	public Philosopher2 (Integer[] forks, int id) {
 		this.id = id;
 		left = forks[id % 5]; //左边的筷子
 		right = forks[(id + 1) % 5];	//右边的筷子
-		random = new Random(47 + id);
 	}
 
 	@Override
