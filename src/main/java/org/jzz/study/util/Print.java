@@ -4,8 +4,16 @@
 package org.jzz.study.util;
 import java.io.*;
 
+/**
+ * @author Merin
+ * @version 1.0.0
+ */
 public class Print {
-  // Print with a newline:
+  /** 
+   * Print with a newline:
+   * @param obj
+   * @return void
+   */
   public static void print(Object obj) {
     System.out.println(obj);
   }

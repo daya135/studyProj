@@ -34,7 +34,7 @@ public class ZipCompress {
 			int n = 0;
 			while((c = bin.read(buf)) > 0) {
 				print(n++);
-				bos.write(buf, 0, c);;
+				bos.write(buf, 0, c);
 			}
 			bin.close();
 			bos.flush();
