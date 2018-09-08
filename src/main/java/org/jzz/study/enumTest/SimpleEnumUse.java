@@ -21,12 +21,12 @@ public class SimpleEnumUse {
 		}
 		
 		//普通的HashMap
-		HashMap<Spiciness, String> map = new HashMap<>();
+		HashMap<Spiciness, String> map = new HashMap<Spiciness, String>();
 		map.put(Spiciness.HOT, "hot!!!!");
 		System.out.println(map.get(Spiciness.HOT));
 		
 		//枚举Map，使用上没什么区别
-		EnumMap<Spiciness, String> em = new EnumMap<>(Spiciness.class);
+		EnumMap<Spiciness, String> em = new EnumMap<Spiciness, String>(Spiciness.class);
 		for (Spiciness s : Spiciness.values()) {
 			em.put(s, s.toString());
 		}

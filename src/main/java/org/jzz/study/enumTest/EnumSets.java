@@ -29,7 +29,7 @@ public class EnumSets {
 		}
 		System.out.println();
 		
-		HashSet<Spiciness> set = new HashSet<>();
+		HashSet<Spiciness> set = new HashSet<Spiciness>();
 		set.add(HOT);
 		set.add(MEDIUM);
 		for (Spiciness s : set) {
