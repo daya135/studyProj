@@ -30,4 +30,11 @@ public class Print {
   printf(String format, Object... args) {
     return System.out.printf(format, args);
   }
+  
+  public static void PrintIntArr(int[] a) {
+	  for (int i = 0; i < a.length; i++){
+    	System.out.print(String.format("%d ", a[i]));
+	  }
+	  System.out.println();
+  }
 } ///:~
