@@ -75,14 +75,20 @@ public class ThreadedBinaryTree<T> {
     		} else if(!listStack.isEmpty()){
 				p = listStack.removeFirst();
 			} else {
-				break;
+				p = null;
 			}
     	}
     }
     
+    /*
+     * 中序线索化
+     * 一旦完成线索化则不能再用常规方法遍历二叉树了，因为叶子节点的左右指针不为空了
+     * */
     public void inOrder(Node node) {
     	Node p = node;
+    	Node pre = null;
     	LinkedList<Node> listStack = new LinkedList<Node>();
+    	
     	while (p != null || !listStack.isEmpty()) {
     		if (p != null) {
     			listStack.push(p);
@@ -90,6 +96,22 @@ public class ThreadedBinaryTree<T> {
     		} else {
 				p = listStack.removeFirst();
 				System.out.print(p.data + " ");
+				if (p.left == null) {
+					p.lTag = 1;
+				}
+				if (p.right == null) {
+					p.rTag = 1;
+				}
+				if (pre != null) {
+					if (pre.rTag == 1) {
+						p.lTag = 1;
+						pre.right = p;
+					}
+					if (p.lTag == 1) {
+						p.left = pre;
+					}
+				} 
+				pre = p;
 				p = p.right;
 			}
     	}
@@ -100,12 +122,14 @@ public class ThreadedBinaryTree<T> {
 //		Integer a[] = {4, 2, 5, 1, 3, 7, 6};
     	ThreadedBinaryTree<Integer> tree = new ThreadedBinaryTree<Integer>();
 		tree.InitTree(a);
-		System.out.println("InOrder_recursion");
-		tree.InOrder_recursion(tree.head);
-		System.out.println("\ntree.inOrder");
-		tree.inOrder(tree.head);
-		System.out.println("\npreOrder");
+		System.out.println("preOrder");
 		tree.preOrder(tree.head);
+		System.out.println("\nInOrder_recursion");
+		tree.InOrder_recursion(tree.head);
+		
+		System.out.println("\ninOrder");
+		tree.inOrder(tree.head);
+		
 	}
 	
 }

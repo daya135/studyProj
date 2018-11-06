@@ -73,7 +73,7 @@ public class Tree<T> {
 		}
 	}
 	
-	public void PreOrderTraverse(Node head) {
+	public void PreOrder(Node head) {
 		LinkedList<Node> listStack = new LinkedList<Node>();
 		Node p = head;
 		while (p != null) {
@@ -93,7 +93,7 @@ public class Tree<T> {
 		}
 	}
 	
-	public void InOrderTraverse(Node head) {
+	public void InOrder(Node head) {
 		LinkedList<Node> listStack = new LinkedList<Node>();
 		Node p = head;
 		while (p != null || !listStack.isEmpty()) {
@@ -108,7 +108,7 @@ public class Tree<T> {
 		}
 	}
 	
-	public void PostOrderTraverse(Node head) {
+	public void PostOrder(Node head) {
 		LinkedList<Node> listStack = new LinkedList<Node>();
 		Node p = head;
 		Node last = p;
@@ -132,7 +132,7 @@ public class Tree<T> {
 	}
 	
 
-	public void PostOrderTraverse2(Node head) {
+	public void PostOrder2(Node head) {
 		LinkedList<Node> listStack = new LinkedList<Node>();
 		Node p = head;
 		listStack.push(p);
@@ -167,12 +167,12 @@ public class Tree<T> {
 		System.out.println();
 		tree.InOrder_recursion(tree.head);
 		System.out.println();
-		tree.PreOrderTraverse(tree.head);
+		tree.PreOrder(tree.head);
 		System.out.println();
-//		tree.PostOrderTraverse(tree.head);
-		tree.PostOrderTraverse2(tree.head);
+//		tree.PostOrder(tree.head);
+		tree.PostOrder2(tree.head);
 		System.out.println();
-		tree.InOrderTraverse(tree.head);
+		tree.InOrder(tree.head);
 		
 		
 	}
