@@ -18,7 +18,7 @@ public class QuikSort {
 		while (low < high) {
 			while (low < high && a[high] >= pivot)	//从右往左移游标
 				--high;
-			if (low < high) {	//改进1: 坐标相同不需要交换
+			if (low < high) {	//改进1: 坐标相同不需要交换， 但是每次都会增加一次比较次数，得不偿失
 				swap(a, low, high);
 				++low;	//改进2: 从high交换到low后，位于low坐标的元素不需要再比较了，后移一位减少一次比较次数
 			}

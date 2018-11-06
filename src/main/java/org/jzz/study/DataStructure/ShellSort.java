@@ -15,17 +15,13 @@ public class ShellSort {
 		//当step = 1时退化为直接插入排序
         for (int i = step; i < A.length; i++) {	//分组，请注意当i/step > 1时会重叠为一组
             int j = i - step;
-            int ai = A[i];
-            int aj = A[j];
+            int temp = A[i];
           //这段循环即为同一组内的直接插入排序（每组为已经排好序的序列）
-            while (j >=0 && aj > ai){	//每组为已经排好序的序列
+            while (j >=0 && A[j] > temp){	//每组为已经排好序的序列
                 A[j + step] = A[j];	//元素后移
                 j = j - step;
-                if (j >= 0) {
-                	aj = A[j];	//往前查找
-                }
             }
-            A[j + step] = ai;	//插入元素
+            A[j + step] = temp;	//找到插入位置，插入元素
         }
         System.out.println("step=" + step);
         Print.PrintIntArr(A);
