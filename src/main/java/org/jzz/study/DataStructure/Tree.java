@@ -7,7 +7,7 @@ import org.jzz.study.util.Print;
 public class Tree<T> {
 	
 	public int length = 0;
-	public Node head = null;
+	public Node root = null;
 	
     class Node {
 		public Node left = null;
@@ -31,7 +31,7 @@ public class Tree<T> {
 			nodeList.add(node);
 		}
 		
-		head = nodeList.getFirst();
+		root = nodeList.getFirst();
 		this.length ++;
 		
 		for (int i = 0; i < arr.length / 2; i++) {
@@ -72,10 +72,10 @@ public class Tree<T> {
 			InOrder_recursion(p.right);
 		}
 	}
-	
-	public void PreOrder(Node head) {
+	/** 前序遍历,非递归算法1 自己的烂代码*/
+	public void PreOrder(Node root) {
 		LinkedList<Node> listStack = new LinkedList<Node>();
-		Node p = head;
+		Node p = root;
 		while (p != null) {
 			System.out.print(p.data + " ");
 			if (p.right != null) {
@@ -92,31 +92,48 @@ public class Tree<T> {
 			}
 		}
 	}
-	
-	public void InOrder(Node head) {
+	/** 前序遍历,非递归算法2 网上的优美代码 */
+	public void PreOrder2(Node root) {
 		LinkedList<Node> listStack = new LinkedList<Node>();
-		Node p = head;
+		Node p = root;
 		while (p != null || !listStack.isEmpty()) {
 			if (p != null) {
+				System.out.print(p.data + " ");
 				listStack.push(p);
 				p = p.left;
 			} else {
+				p = listStack.removeFirst();
+				p = p.right;
+			}
+		}
+	}
+	
+	/** 中序遍历，非递归 */
+	public void InOrder(Node root) {
+		LinkedList<Node> listStack = new LinkedList<Node>();
+		Node p = root;
+		while (p != null || !listStack.isEmpty()) {
+			while (p != null) {
+				listStack.push(p);
+				p = p.left;
+			}
+			if(!listStack.isEmpty()){
 				p = listStack.removeFirst();
 				System.out.print(p.data + " ");
 				p = p.right;
 			}
 		}
 	}
-	
-	public void PostOrder(Node head) {
+	/** 后序遍历，非递归，访问标志法 */
+	public void PostOrder(Node root) {
 		LinkedList<Node> listStack = new LinkedList<Node>();
-		Node p = head;
+		Node p = root;
 		Node last = p;
 		listStack.push(p);
 		while (!listStack.isEmpty()) {
 			p = listStack.getFirst();
-			if ((p.left == null && p.right == null)
-				|| (p.right == null && last == p.left) || (last == p.right)) {
+			if ((p.left == null && p.right == null) ||
+				(last != null) && (p.right == last && p.left == last)) {  //入栈顺序决定了不可能出现right不为空且last==left的情况，
 				System.out.print(p.data + " ");
 				last = p;
 				listStack.removeFirst();
@@ -131,10 +148,10 @@ public class Tree<T> {
 		}
 	}
 	
-
-	public void PostOrder2(Node head) {
+	/** 后序遍历，非递归，双栈法 */
+	public void PostOrder2(Node root) {
 		LinkedList<Node> listStack = new LinkedList<Node>();
-		Node p = head;
+		Node p = root;
 		listStack.push(p);
 		listStack.push(p);
 		while (!listStack.isEmpty()) {
@@ -152,7 +169,43 @@ public class Tree<T> {
 				System.out.print(p.data + " ");
 			}
 		}
-		
+	}
+	
+	public void layerOrder() {
+		LinkedList<Node> listStack = new LinkedList<Node>();
+		Node p = this.root;
+		listStack.push(p);
+		while(!listStack.isEmpty()) {
+			p = listStack.removeLast();
+			System.out.print(p.data + " ");
+			if (p.left != null) {
+				listStack.push(p.left);
+			}
+			if (p.right != null) {
+				listStack.push(p.right);
+			}
+		}
+	}
+	
+	public void testOrder() {
+		LinkedList<Node> listStack = new LinkedList<Node>();
+		Node p = this.root;
+		Node pre = null;
+		listStack.push(p);
+		while(!listStack.isEmpty()) {
+			p = listStack.getFirst();
+			if ((p.left == null && p.right == null) ||
+					(pre != null &&(p.left == pre || p.right == pre))) {
+				System.out.print(p.data + " ");
+				pre = p;
+				listStack.removeFirst();
+			} else {
+				if (p.right != null)
+					listStack.push(p.right);
+				if (p.left != null) 
+					listStack.push(p.left);
+			}
+		}
 	}
 	
 	
@@ -161,19 +214,25 @@ public class Tree<T> {
 //		Integer a[] = {4, 2, 5, 1, 3, 7, 6};
 		Tree<Integer> tree = new Tree<Integer>();
 		tree.InitTree(a);
-		tree.PreOrder_recursion(tree.head);
+		System.out.println("layerOrder");
+		tree.layerOrder();
+		System.out.println("\nPreOrder_recursion");
+		tree.PreOrder_recursion(tree.root);
+		System.out.println("\nPostOrder_recursion");
+		tree.PostOrder_recursion(tree.root);
+		System.out.println("\nInOrder_recursion");
+		tree.InOrder_recursion(tree.root);
+		System.out.println("\nPreOrder");
+		tree.PreOrder(tree.root);
 		System.out.println();
-		tree.PostOrder_recursion(tree.head);
-		System.out.println();
-		tree.InOrder_recursion(tree.head);
-		System.out.println();
-		tree.PreOrder(tree.head);
-		System.out.println();
-//		tree.PostOrder(tree.head);
-		tree.PostOrder2(tree.head);
-		System.out.println();
-		tree.InOrder(tree.head);
-		
+		tree.PreOrder2(tree.root);
+		System.out.println("\nPostOrder");
+//		tree.PostOrder(tree.root);
+		tree.PostOrder2(tree.root);
+		System.out.println("\nInOrder");
+		tree.InOrder(tree.root);
+		System.out.println("\ntestOrder");
+		tree.testOrder();
 		
 	}
 	
