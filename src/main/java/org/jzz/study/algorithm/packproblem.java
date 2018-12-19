@@ -9,12 +9,13 @@ public class packproblem {
 	
 	int[] w = {3,4,5,6}; //1~n的体积
 	int[] v = {5,7,8,11};	//1~n的价值
-	int[][] V = new int[n + 1][capacity + 1]; //v[i][j]: 当前背包容量j，前i个物品最佳组合对应的价值
+	int[][] V = new int[n + 1][capacity + 1]; //v[i][j]——前i个物品在当前背包容量为j时，最佳组合对应的价值
 	
 	int max_i = 0;
 	int max_j = 0;
 	int max_V = 0;
 	
+	//打表
 	packproblem FindMax() {
 		for (int i = 0; i <= n; i++) {
 			V[i][0] = 0;
@@ -24,8 +25,8 @@ public class packproblem {
 		}
 		for(int i = 1; i <= n; i++) {
 			for (int j = 1; j <= capacity; j++) {
-				if (j < w[i - 1]) {
-					V[i][j] = V[i - 1][j]; //不装
+				if (j < w[i - 1]) {	//注意下标，i是从1开始的，所以w[i - 1]表示第i个
+					V[i][j] = V[i - 1][j]; //包容量小于当前石头体积
 				} else {
 					if (V[i - 1][j] > (V[i - 1][j - w[i - 1]] + v[i - 1])) {
 						V[i][j] = V[i - 1][j];
@@ -66,7 +67,7 @@ public class packproblem {
 	
 	void FindWhat(int i, int j) {
 		if (i > 0) {
-			if (V[i][j] == V[i - 1][j]) {
+			if (V[i][j] == V[i - 1][j]) {	//关键条件是回到上一个解空间的条件
 				System.out.println("第" + i + "个没选");
 				FindWhat(i - 1, j);
 			} else if(V[i][j] == (V[i - 1][j - w[i - 1]] + v[i - 1])) {

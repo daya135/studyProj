@@ -23,6 +23,8 @@ public class HeapSort {
 		}
 	}
 	
+	/** i表示需要调整的父节点下标
+	 * */
 	static void adjustHeap(int[] a, int i, int length) {
 		int temp = a[i];
 		for (int k = 2 * i + 1; k < length; k = k * 2 + 1) { //2*i+1肯定是直接左子节点！！
@@ -36,8 +38,25 @@ public class HeapSort {
 				break;	//因为是自下而上建好的堆，所以两个子节点都比父节点小的时候就不用往下找了
 			}
 		}
-		a[i] = temp;
+		a[i] = temp;	//将初始的父节点放到最终位置
 	}
+	
+	//版本2，在交换父子节点时更直观，但代码执行复杂度条数会多一些
+//	static void adjustHeap(int[] A, int i, int len) {
+//		int k = i;
+//		while (k < len && 2 * k + 1 < len) {
+//			k = 2 * k + 1;
+//			if (k + 1 < len && A[k + 1] > A[k]) {
+//				k = k + 1;
+//			}
+//			if (A[k] > A[i]) {
+//				swap(A, i, k);	//直接交换父子节点，比较直观
+//				i = k;
+//			} else {
+//				break;
+//			}
+//		}
+//	}
 	
 	
 	public static void main(String[] args) {

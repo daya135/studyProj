@@ -113,45 +113,43 @@ public class queenproblem {
 	}
 	
 	//判断冲突
-	private static boolean available(int[] queen, int A, int B) {
-		for(int i = 0; i < A; i++){
-	        if(B == queen[i]) return false; //同一列拒绝
-	        if((A - i) == (B - queen[i])) return false; //同一主对角线拒绝
-	        if(A - i + B - queen[i] == 0) return false; //同一副对角线拒绝
+	private static boolean available(int[] queen, int row, int col) {
+		for(int i = 0; i < row; i++){ //遍历已经放好的皇后
+	        if(col == queen[i]) return false; //同一列拒绝
+	        if((row - i) == (col - queen[i])) return false; //同一主对角线拒绝(左上到右下)
+	        if((row - i) == (queen[i] - col)) return false; //同一副对角线拒绝
 	    }
 		return true;
 	}
 	
 	private static void findSpace(int[] queen, int queenIdx) {
-		for (int i = 0; i < SIZE; i++) {
-			if (available(queen, queenIdx, i)) {
-				queen[queenIdx] = i;
-				if(queenIdx == SIZE - 1) {
+		for (int i = 0; i < SIZE; i++) {	//扫描1～8列
+			if (available(queen, queenIdx, i)) {	//查找当前行的合法位置
+				queen[queenIdx] = i;  //如果本行有合法位置则记录下第queenIdx个皇后的位置
+				if(queenIdx == SIZE - 1) {	//皇后放满了
 					count++;
 					Print.PrintIntArr(queen);
 					return;
 				}
-				int nextNumber = queenIdx + 1;
-				findSpace(queen, nextNumber);
+				int nextIdx = queenIdx + 1; //皇后位置
+				findSpace(queen, nextIdx);  //查找下一个皇后位置
 			}
 		}
-		queen[--queenIdx] = -1;
-		return;
+		if(queenIdx == 0) {
+			Print.print("解法数量:" + count);
+		} else {
+			queen[--queenIdx] = -1; //撤销上一个皇后，回溯
+		}
 	}
 	
 	static void printTable(int[][] table) {
-		for (int[] t : table) {
-			for (int i : t) {
-				System.out.print(String.format("%3s", i + " "));
-			}
-			System.out.println();
-		}
+		Print.PrintIntArr(table);
 		System.out.println("************************");
 	}
 	
 	public static void main(String[] args) {
-//		MatrixSolution();
-		recursionSolution();
+		MatrixSolution();
+//		recursionSolution();
 	}
 	
 }

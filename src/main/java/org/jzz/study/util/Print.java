@@ -37,4 +37,16 @@ public class Print {
 	  }
 	  System.out.println();
   }
+  
+  public static void PrintIntArr(int[][] A) {
+	  for (int[] a : A) {
+			for (int i : a) {
+				System.out.print(String.format("%3s", i + " "));
+			}
+			System.out.println();
+	  }
+	  System.out.println();
+  }
+  
+  
 } ///:~
