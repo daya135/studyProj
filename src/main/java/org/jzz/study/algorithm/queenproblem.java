@@ -122,6 +122,7 @@ public class queenproblem {
 		return true;
 	}
 	
+	//queenIdx ：列
 	private static void findSpace(int[] queen, int queenIdx) {
 		for (int i = 0; i < SIZE; i++) {	//扫描1～8列
 			if (available(queen, queenIdx, i)) {	//查找当前行的合法位置
@@ -138,7 +139,7 @@ public class queenproblem {
 		if(queenIdx == 0) {
 			Print.print("解法数量:" + count);
 		} else {
-			queen[--queenIdx] = -1; //撤销上一个皇后，回溯
+//			queen[--queenIdx] = -1; //撤销上一个皇后，实际上这句话不影响运行结果！！因为available函数没用这个值作判断
 		}
 	}
 	
@@ -148,8 +149,8 @@ public class queenproblem {
 	}
 	
 	public static void main(String[] args) {
-		MatrixSolution();
-//		recursionSolution();
+//		MatrixSolution();
+		recursionSolution();
 	}
 	
 }
