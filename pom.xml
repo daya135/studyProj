@@ -1,67 +1,72 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.jzz</groupId>
-  <artifactId>studyProj</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
+	<groupId>org.jzz</groupId>
+	<artifactId>studyProj</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 
-  <name>studyProj</name>
-  <url>http://maven.apache.org</url>
+	<name>studyProj</name>
+	<url>http://maven.apache.org</url>
 
-  <properties>
-  	<java.version>1.8</java.version>
-    <spring.version>4.0.0.RELEASE</spring.version>
-    <!-- 编译时的编码 -->  
-    <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+	<properties>
+		<java.version>1.8</java.version>
+		<spring.version>4.0.0.RELEASE</spring.version>
+		<!-- 编译时的编码 -->
+		<maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-    <!-- spring核心包 -->  
-    <dependency>  
-        <groupId>org.springframework</groupId>  
-        <artifactId>spring-core</artifactId>  
-        <version>${spring.version}</version>  
-    </dependency>
-   	<dependency>
-	    <groupId>org.springframework</groupId>
-	    <artifactId>spring-beans</artifactId>
-	    <version>${spring.version}</version>
-	</dependency>
-    <dependency>
-	    <groupId>org.apache.httpcomponents</groupId>
-	    <artifactId>httpclient</artifactId>
-	    <version>4.5.2</version>
-	</dependency>
-	
-	<dependency>
-    	<groupId>com.io7m.xom</groupId>
-    	<artifactId>xom</artifactId>
-    	<version>1.2.10</version>
-	</dependency>
-	
-	<!-- https://mvnrepository.com/artifact/org.json/json -->
-	<dependency>
-	    <groupId>org.json</groupId>
-	    <artifactId>json</artifactId>
-	    <version>20180130</version>
-	</dependency>
-	<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
-	<dependency>
-	    <groupId>com.fasterxml.jackson.core</groupId>
-	    <artifactId>jackson-databind</artifactId>
-	    <version>2.9.5</version>
-	</dependency>
-	
-  </dependencies>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- spring核心包 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.io7m.xom</groupId>
+			<artifactId>xom</artifactId>
+			<version>1.2.10</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.json/json -->
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20180130</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.9.5</version>
+		</dependency>
+
+	</dependencies>
+	 <build>
+   	<!-- 测试pom标签属性 
+    <directory>target/libdir</directory>
+    -->
 	<plugins>
 		<plugin>  
 			<groupId>org.apache.maven.plugins</groupId>  
@@ -71,8 +76,44 @@
 				<source>${java.version}</source>
 				<target>${java.version}</target>
 				<!-- 指定编码格式，否则在DOS下运行mvn compile命令时会出现莫名的错误，因为系统默认使用GBK编码 --> 
-				<encoding>{maven.compiler.encoding}</encoding>
+				<encoding>${maven.compiler.encoding}</encoding>
 			</configuration>  
 		</plugin>
-	</plugins>        
+		
+		<!-- 添加这个插件后会把所有依赖copy到指定文件夹中 -->
+		<plugin>
+		    <groupId>org.apache.maven.plugins</groupId>
+		    <artifactId>maven-dependency-plugin</artifactId>
+		    <version>3.1.1</version>
+		    <executions>
+		        <execution>
+		            <id>copy-dependencies</id>
+		            <phase>package</phase>
+		            <goals>
+		                <goal>copy-dependencies</goal>
+		            </goals>
+		            <configuration>
+		                <outputDirectory>${project.build.directory}/lib</outputDirectory>
+		            </configuration>
+		        </execution>
+		    </executions>
+		</plugin>
+		
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>  
+            <artifactId>maven-jar-plugin</artifactId>  
+            <version>2.6</version> 
+            <configuration>
+            	<archive>
+            		<!-- 直接配置manifest文件的参数，可以打出可执行jar包，请注意依赖文件不包含在jar包内，因为jar之间是独立并列的 -->
+            		<manifest>
+            			<addClasspath>true</addClasspath>
+            			<classpathPrefix>lib/</classpathPrefix>
+            			<mainClass>org.jzz.study.App</mainClass>
+            		</manifest>
+            	</archive>
+            </configuration>
+		</plugin>
+		</plugins>
+	</build>
 </project>

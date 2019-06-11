@@ -2,8 +2,6 @@ package org.jzz.study.DataStructure;
 
 import org.jzz.study.util.Print;
 
-import sun.swing.icon.SortArrowIcon;
-
 public class SelectSort {
 	
 	static void swap(int[] a, int i, int j) {

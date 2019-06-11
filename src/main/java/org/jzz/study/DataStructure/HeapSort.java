@@ -23,8 +23,10 @@ public class HeapSort {
 		}
 	}
 	
-	/** i表示需要调整的父节点下标
-	 * */
+	/* 
+	 * i表示需要调整的父节点下标
+	 * 从上往下调整堆！！！！
+	 */
 	static void adjustHeap(int[] a, int i, int length) {
 		int temp = a[i];
 		for (int k = 2 * i + 1; k < length; k = k * 2 + 1) { //2*i+1肯定是直接左子节点！！

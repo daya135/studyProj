@@ -5,18 +5,39 @@ import org.jzz.study.util.Print;
 public class HuffmanTree {
 	
 	/** 双亲表示法 */
-	static class Node {
+	 class Node implements BaseNode{
 		public char ch;
 		public int weight;
 		public int parent;
 		public int lchild, rchild;
 		public String toString() {
-			return "{" + ch + " " + weight + " " + parent + "} ";
+			return "{" + ch + " " + weight + " " + parent + "}";
+		}
+		public BaseNode getLeft() {
+			if (lchild == 0)
+				return null;
+			return nodes[lchild];
+		}
+		public BaseNode getRight() {
+			if (rchild == 0)
+				return null;
+			return nodes[rchild];
+		}
+		public BaseNode getParent() {
+			return nodes[parent];
+		}
+		public String getValue() {
+			if (ch != '\u0000') {
+				return "" + ch;
+			} else {
+				return String.valueOf(weight);
+			}
 		}
 	}
 	int MAXLEAFNUM = 16;
-	Node[] nodes = new Node[2 * MAXLEAFNUM];	//声明对象数组后 ，必须对每个数组成员进行实例化话 才能直接使用，否则报 空指针异常！
+	Node[] nodes = new Node[2 * MAXLEAFNUM];	//声明对象数组后 ，必须对每个数组成员进行实例化才能直接使用，否则报空指针异常！
 	char[] huffmanCode = new char[MAXLEAFNUM + 1];
+	public Node root;
 	
 	public void display() {
 		for (int i = 0; i < this.nodes.length; i++) {
@@ -57,7 +78,7 @@ public class HuffmanTree {
 		display();
 		Print.print("建树完成, 根节点:" +  (i - 1));
 		Print.print(nodes[i - 1]);
-		
+		this.root = nodes[i - 1];
 	}
 	
 	public int[] select(int n) {
@@ -85,8 +106,6 @@ public class HuffmanTree {
 		}
 		return s;
 	}
-	
-	
 	
 	public static void main(String[] args) {
 		char[] c = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'};
