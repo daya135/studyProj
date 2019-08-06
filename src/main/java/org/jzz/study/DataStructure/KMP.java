@@ -2,6 +2,7 @@ package org.jzz.study.DataStructure;
 
 import org.jzz.study.util.Print;
 
+
 public class KMP {
 	
 	static int[] getNext(String str) {
@@ -15,8 +16,18 @@ public class KMP {
 			if (k == -1 || p[j] == p[k]) {
 				next[++j] = ++k;
 			} else {
-				k = next[k];
+				k = next[k];  //灵魂！！！
 			}
+			//改进版，当发生P[j] == P[next[j]]时，会多一次不必要的比较，见印象笔记kmp篇结尾
+//			if (k == -1 || p[j] == p[k]) {
+//				if (p[++j] == p[++k]) {
+//					next[j] = next[k];
+//				} else {
+//					next[j] = k;
+//				}
+//			} else {
+//				k = next[k];
+//			}
 		}
 		return next;
 	}

@@ -4,7 +4,8 @@ import org.jzz.study.util.Print;
 
 public class HuffmanTree {
 	
-	/** 双亲表示法 */
+	/** 哈夫曼树，节点数据结构
+	 * 双亲表示法 */
 	 class Node implements BaseNode{
 		public char ch;
 		public int weight;

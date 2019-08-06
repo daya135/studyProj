@@ -22,6 +22,6 @@ public class SearchAlgorithm {
 	
 	public static void main(String[] args) {
 		Integer[] ints = new Integer[]{1,2,3,4,5,6,7,9}; 
-		System.out.println("index: " + binarySearch(ints, 7)); //不能将自动包装用于数组，所以不能传入基本类型数组
+		System.out.println("index: " + binarySearch(ints, 1)); //不能将自动包装用于数组，所以不能传入基本类型数组
 	}
 }

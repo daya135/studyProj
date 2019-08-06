@@ -3,12 +3,91 @@
 // qualifiers, using Java SE5 static imports:
 package org.jzz.study.util;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.jzz.study.DataStructure.BaseNode;
+import org.jzz.study.DataStructure.HuffmanTree;
+import org.jzz.study.DataStructure.Tree;
 
 /**
  * @author Merin
  * @version 1.0.0
  */
 public class Print {
+	static int ContentLength = 2; //打印内容所占的长度
+	
+	//用于打印的树节点
+	static class PNode {
+		public BaseNode node;
+		public int row;
+		public int col;
+		public PNode(BaseNode node) {
+			this.node = node;
+		}
+	}
+	
+	//返回空白字符串，每个空白占用step位数
+	static String getString(int num, int step) {
+		StringBuffer sBuffer = new StringBuffer("");
+		for (int i = 0; i < num * step; i++) {
+			sBuffer.append(" ");
+		}
+		return sBuffer.toString();
+	}
+	
+	//返回下一层所有节点，记录层数和位置
+	static List<PNode> getNextStep(List<PNode> tempList, int row) {
+		ArrayList<PNode> nextList = new ArrayList<PNode>();
+		PNode b;
+		int tcol = 0;
+		boolean hasChild = false; //整个这一层是否有非空子节点
+		BaseNode bNode = new BaseNode() {
+			@Override
+			public String getValue() {
+				return " ";
+			}
+			@Override
+			public BaseNode getRight() {
+				return null;
+			}
+			@Override
+			public BaseNode getParent() {
+				return null;
+			}
+			@Override
+			public BaseNode getLeft() {
+				return null;
+			}
+		};
+		for (int i = 0; i < tempList.size(); i++) {
+			b = tempList.get(i);
+			PNode tp;
+			if (b.node.getLeft() != null) {
+				tp = new PNode(b.node.getLeft());
+				hasChild = true;
+			} else {
+				tp = new PNode(bNode);
+			}
+			tp.row = row;
+			tp.col = ++tcol;
+			nextList.add(tp);
+			if (b.node.getRight() != null) {
+				tp = new PNode(b.node.getRight());
+				hasChild = true;
+			} else {
+				tp = new PNode(bNode);
+			}
+			tp.row = row;
+			tp.col = ++tcol;
+			nextList.add(tp);
+		}
+		if(!hasChild) {
+			return new ArrayList<PNode>();
+		}
+		return nextList;
+	}
+	
   /** 
    * Print with a newline:
    * @param obj
@@ -47,6 +126,81 @@ public class Print {
 	  }
 	  System.out.println();
   }
+  
+  //打印链式树
+	public static void printTree(BaseNode head) {
+		ArrayList<PNode> list = new ArrayList<PNode>();
+		int row = 1;
+		List<PNode> tempList = new ArrayList<PNode>();
+		PNode pNode = new PNode(head);
+		pNode.row = row;
+		pNode.col = 1;
+		tempList.add(pNode);
+		list.add(pNode);
+		while(tempList.size() != 0) {
+			//获得下一层节点
+			tempList = getNextStep(tempList, ++row);
+			//将下一层节点放入到当前打印队列
+			for (int i = 0; i < tempList.size(); i++) {
+				list.add(tempList.get(i));
+			}
+			if (tempList.size() == 0) {
+				--row;
+				break;
+			}
+		}
+		
+		int step = ContentLength; //每个节点内容占用位数
+		int r = 1; //当前层数
+		do {
+			String rowStr = getString(new Double(Math.pow(2, row - r)).intValue() - 1, step);
+			PNode node;
+			do {
+				node = list.remove(0);
+				String value = node.node.getValue();
+				if (value.length() < step) {
+					value = getString(step - value.length(), 1) + value; //节点内容长度不够时往前补空格
+				}
+				rowStr += value;
+				rowStr += getString(new Double(Math.pow(2, row + 1 - r)).intValue() - 1, step);
+			} while (list.size() > 0 && r == list.get(0).row);
+			Print.print(rowStr);
+			Print.print(); //空一行
+			r++;
+		} while (r <= row && list.size() > 0);
+		
+	}
+	
+	//打印用数组表示的树，第二个参数表示以哪个下标为根节点,第三个参数表示长度
+	public static void printTree(int a[], int head, int length) {
+		if(length > a.length || head >= a.length || head < 0) return;
+		int max_row = (int)Math.ceil(Math.log((double)length - head + 1) / Math.log(2)); //取得总层数，请注意是log2(n+1)层
+		int step = ContentLength;
+		
+		for (int r = 0; r < max_row; r++) { //行，从0开始
+			String rowStr = "";//当前行打印内容
+			for (int c = 0; c < Math.pow(2, r); c++) {	//列，从0开始，第r行有2^r列
+				int index = (int)Math.pow(2, r) + c - 1 + head; //计算当前节点下标
+				if (index >= length) {
+					break;
+				}
+				String value = String.valueOf(a[index]);	//当前节点内容
+				if (value.length() < step) {
+					value = getString(step - value.length(), 1) + value; //节点内容长度不够时往前补空格
+				}
+				
+				if (c == 0) {
+					rowStr = getString((int)(Math.pow(2, max_row - r - 1) - 1), step); //第0列补充 2^(max_row-r)-1个step空间
+				} else {
+					rowStr += getString((int)(Math.pow(2, max_row - r) - 1), step); //后续每个间隔 2^(max_row-r+1)-1个step空间
+				}
+				rowStr += value;
+			}
+			Print.print(rowStr);
+			Print.print();//多打一行空行
+		}
+		
+	}
   
   
 } ///:~
