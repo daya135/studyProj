@@ -25,6 +25,26 @@ public class Test {
 		a[j] = temp;
 	}
 	
+	static int[] getNext(String str) {
+		char[] c = str.toCharArray();
+		int[] next = new int[c.length];
+		int k = -1;
+		next[0] = -1;
+		int i = 0;
+		while (i < c.length - 1){
+			if (k == -1 || c[k] == c[i]) {
+				k++;
+				i++;
+				next[i] = k;
+			} else {
+				k = next[k];
+			}
+		}
+	
+		return next;
+	}
+	
+	
 //	static final int capacity = 8;
 //	static final int num = 4;
 //	static final int[] w = {2, 3, 4, 5};
@@ -46,7 +66,7 @@ public class Test {
 		int a[] = {10, 8, 9, 4, 12, 6, 14, 3, 5, 11, 15, 7, 1, 13, 2};
 		int[] steps = {4, 2, 1};
 		String tStr = "ABACDABABH";
-		String pString = "ABAC";
+		String pString = "AAABCAAABC";
 //		while (true) {
 //			System.in.read();
 //		}
@@ -61,15 +81,26 @@ public class Test {
 //		findWhy(max_i, max_j);
 //		findQueen(new int[SIZE], 0);
 		
+		Print.PrintIntArr(getNext(pString));
 		
 		char[] c = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'};
 		int[] w = {2, 10, 3, 7, 5, 8, 9, 1, 6};
 		int len = 9;
-//		HuffmanTree hufftree = new HuffmanTree();
+		HuffmanTree hufftree = new HuffmanTree();
 //		hufftree.createTree(c, w, len);
 //		Print.print(System.currentTimeMillis());
 //		printTree(hufftree.root);
 //		Print.print(System.currentTimeMillis());
 		
+		String site = "出口|卫生间.aaa";
+//		Print.print(site.indexOf("\\."));
+//		Print.print(site.substring(site.indexOf(".") + 1));
+//		StringBuilder sBuffer = new StringBuilder(site);
+//		String[] sites = sBuffer.toString().split("|");
+//        for (String s : sites) {
+//            Print.print( "读取sit内容:" + s);
+//        }
+		
+		Print.printArr(c, "\n");
 	}
 }

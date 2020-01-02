@@ -56,7 +56,7 @@ public class KMP {
 	
 	public static void main(String[] args) {
 		String str = "ABACDABACDAABACDABACDABABHABACDABACDA";
-		String pstr = "ABACDABABH";
+		String pstr = "abaac";
 		int[] a = getNext(pstr);
 		int idx = strIdx(str, pstr);
 		Print.PrintIntArr(a);

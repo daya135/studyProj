@@ -184,6 +184,7 @@ public class Tree<T> {
 		}
 	}
 	
+	/** 层序遍历 */
 	public void layerOrder() {
 		LinkedList<Node> listStack = new LinkedList<Node>();
 		Node p = this.root;

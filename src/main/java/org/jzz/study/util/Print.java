@@ -3,6 +3,8 @@
 // qualifiers, using Java SE5 static imports:
 package org.jzz.study.util;
 import java.io.*;
+import java.lang.reflect.Array;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,8 +91,8 @@ public class Print {
 	}
 	
   /** 
-   * Print with a newline:
-   * @param obj
+   * 调用toString打印对象，尾部换行:
+   * @param obj 打印的对象
    * @return void
    */
   public static void print(Object obj) {
@@ -199,8 +201,43 @@ public class Print {
 			Print.print(rowStr);
 			Print.print();//多打一行空行
 		}
-		
 	}
-  
+	
+	/** 一个打印任意类型的数组的方法；
+	 * @param arr 数组对象
+	 * @param fucName 方法名，转换元素为要显示的字符串内容，默认为toString()
+	 * @param splitStr 分隔符
+	 */
+//	public static void printArr(Object[] arr) {} //只能接受非基本类型数组，麻烦
+//	public static <T> void printArr(T[] arr) {}	 //同样只能接受非基本类型数组，麻烦。
+	public static void printArr(Object arr, String fucName, String splitStr) { //最终版本
+		if(arr == null) return;
+		
+		try {
+			for (int i = 0; i < Array.getLength(arr); i++) { //nb!!!此方法支持任何类型数组！！ps：是一个native方法
+				Object obj = Array.get(arr, i);
+				Object content = obj;
+//				object.getClass().isPrimitive();	//判断原始数据类型，但是没用，貌似被Array类包装了～
+				if (fucName != null){	
+					Method method = obj.getClass().getMethod(fucName, null);
+					content = (String) method.invoke(Array.get(arr, i), null);
+				}
+				System.out.print(content);	//Array.get获得数组对象，invoke对应方法
+				System.out.print(splitStr);
+			}
+			if (!"\n".equals(splitStr))
+				System.out.println();	//最后一行避免再次换行
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/** 一个打印任意类型数组的方法
+	 * @param arr 数组对象
+	 * @param splitStr 分隔符
+	 */
+	public static void printArr(Object arr, String splitStr) { 
+		printArr(arr, null, splitStr);
+	}
   
 } ///:~

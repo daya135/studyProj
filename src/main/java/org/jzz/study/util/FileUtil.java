@@ -1,8 +1,13 @@
 package org.jzz.study.util;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
@@ -70,5 +75,72 @@ public class FileUtil {
 		copyFile(source, "D:/Download/美国众神2.mp4");
 		System.out.println((System.nanoTime() - now)/1000000000);
 	}
+	
+    /**
+     * @param path 文件绝对路径
+     * @return 文本内容
+     */
+    public static String getString(String path) {
+        File file = new File(path);
+        return getString(file);
+    }
+
+    /**
+     * @param file 文件对象
+     * @return 文本内容
+     */
+    public static String getString(File file) {
+        if (!file.exists()) {
+            return "没有找到文件";
+        }
+
+        try {
+            FileInputStream stream = new FileInputStream(file);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+            String line;
+            StringBuilder sb = new StringBuilder();
+            line = reader.readLine();
+            if (line != null) {
+                do {
+                    if (line.length() > 2) {
+                        if ((line.charAt(0) == '*') && (line.charAt(1) == '*')) {
+                            continue;
+                        }
+                    }
+                    sb.append(line);
+                    sb.append("\r\n");
+                } while ((line = reader.readLine()) != null);
+                sb.delete(sb.length() - 2, sb.length());
+            }
+            reader.close();
+            stream.close();
+            return sb.toString();
+        } catch (Exception e) {
+        	 e.printStackTrace();
+        }
+
+        return "";
+
+    }
+
+    /**
+     * @param path 文件地址
+     * @param value 写入内容
+     * @param append 是否追加写入
+     */
+    public static void writeString(String path, String value, Boolean append) {
+        try {
+            File file = new File(path);
+            if (!file.exists()) {
+                file.createNewFile(); //不存在的文件直接创建
+            }
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file, append));
+            writer.write(value, 0, value.length());
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 	
 }
