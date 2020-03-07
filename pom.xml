@@ -60,8 +60,15 @@
 	    <artifactId>jackson-databind</artifactId>
 	    <version>2.9.5</version>
 	</dependency>
+	<!-- https://mvnrepository.com/artifact/net.sourceforge.jexcelapi/jxl -->
+	<dependency>
+    	<groupId>net.sourceforge.jexcelapi</groupId>
+    	<artifactId>jxl</artifactId>
+    	<version>2.6.12</version>
+	</dependency>
 	
   </dependencies>
+  <build>
 	<plugins>
 		<plugin>  
 			<groupId>org.apache.maven.plugins</groupId>  
@@ -71,8 +78,9 @@
 				<source>${java.version}</source>
 				<target>${java.version}</target>
 				<!-- 指定编码格式，否则在DOS下运行mvn compile命令时会出现莫名的错误，因为系统默认使用GBK编码 --> 
-				<encoding>{maven.compiler.encoding}</encoding>
+				<encoding>UTF-8</encoding>
 			</configuration>  
 		</plugin>
-	</plugins>        
+	</plugins> 
+	</build>       
 </project>
