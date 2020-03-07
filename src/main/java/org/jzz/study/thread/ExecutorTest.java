@@ -5,7 +5,7 @@ import java.util.concurrent.Executors;
 
 public class ExecutorTest {
 	
-	class Sleeper extends Thread {
+	static class Sleeper extends Thread {
 		private int duration;
 		public Sleeper(String name, int sleepTime) {
 			super(name);
@@ -23,7 +23,7 @@ public class ExecutorTest {
 		}
 	}
 	
-	class Joiner extends Thread {
+	static class Joiner extends Thread {
 		private Sleeper sleeper;
 		public Joiner(String name, Sleeper sleeper) {
 			super(name);
@@ -40,7 +40,7 @@ public class ExecutorTest {
 		}
 	}
 	
-	public void JoinTest() {
+	public static void JoinTest() {
 		Sleeper
 			sleepy = new Sleeper("Sleepy", 1000),
 			grumpy = new Sleeper("Sleepy", 1000);
@@ -56,6 +56,6 @@ public class ExecutorTest {
 //		exec.execute(new MyRunable(10));
 //		exec.shutdown();
 		
-		new ExecutorTest().JoinTest();
+		ExecutorTest.JoinTest();
 	}
 }

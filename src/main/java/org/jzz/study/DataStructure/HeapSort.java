@@ -11,20 +11,22 @@ public class HeapSort {
 	}
 	
 	static void heapSort(int[] a) {
+		Print.printTree(a, 0, a.length);
 		for (int i = a.length / 2 - 1; i >= 0; i--) {
 			adjustHeap(a, i, a.length);		//建堆，从下往上建，逐级调整
-			
+			Print.printTree(a, 0, a.length);
 		}
-		Print.PrintIntArr(a);
 		for (int j = a.length - 1; j > 0; j--) {
 			swap(a, 0, j);		//交换堆顶和堆底元素，并从堆中移除这个元素
 			adjustHeap(a, 0, j);	//从堆顶开始调整堆，逐级向下调整
-			Print.PrintIntArr(a);
+			Print.printTree(a, 0, a.length);
 		}
 	}
 	
-	/** i表示需要调整的父节点下标
-	 * */
+	/* 
+	 * i表示需要调整的父节点下标
+	 * 从上往下调整堆！！！！
+	 */
 	static void adjustHeap(int[] a, int i, int length) {
 		int temp = a[i];
 		for (int k = 2 * i + 1; k < length; k = k * 2 + 1) { //2*i+1肯定是直接左子节点！！

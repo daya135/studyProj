@@ -9,13 +9,26 @@ public class Tree<T> {
 	public int length = 0;
 	public Node root = null;
 	
-    class Node {
+    class Node implements BaseNode{
 		public Node left = null;
 		public Node right = null;
 		public T data;
 		
 		Node(T t) {
 			this.data = t;
+		}
+		
+		public BaseNode getLeft() {
+			return left;
+		}
+		public BaseNode getRight() {
+			return right;
+		}
+		public BaseNode getParent() {
+			return null;
+		}
+		public String getValue() {
+			return String.valueOf(data);
 		}
     }
 	
@@ -171,6 +184,7 @@ public class Tree<T> {
 		}
 	}
 	
+	/** 层序遍历 */
 	public void layerOrder() {
 		LinkedList<Node> listStack = new LinkedList<Node>();
 		Node p = this.root;
