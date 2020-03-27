@@ -2,7 +2,6 @@ package org.jzz.study.DataStructure;
 
 import org.jzz.study.util.Print;
 
-import com.sun.javafx.image.impl.IntArgb;
 
 public class QuikSort {
 	

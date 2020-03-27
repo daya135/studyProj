@@ -215,7 +215,7 @@ public class Print {
 		
 		try {
 			for (int i = 0; i < Array.getLength(arr); i++) { //nb!!!此方法支持任何类型数组！！ps：是一个native方法
-				Object obj = Array.get(arr, i);
+				Object obj = Array.get(arr, i);	//nb!!!此方法支持任何类型数组！！ps：是一个native方法
 				Object content = obj;
 //				object.getClass().isPrimitive();	//判断原始数据类型，但是没用，貌似被Array类包装了～
 				if (fucName != null){	
