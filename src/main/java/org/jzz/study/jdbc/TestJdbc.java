@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 import org.jzz.study.util.Print;
 
 //原来的jdbc驱动已经升级了成 com.mysql.cj.jdbc.Driver
-public class JdbcTest {
+public class TestJdbc {
 	
 	static void testJdbc() throws Exception{
 		Class.forName("com.mysql.cj.jdbc.Driver");
