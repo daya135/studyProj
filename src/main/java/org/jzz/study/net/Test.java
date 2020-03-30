@@ -1,4 +1,4 @@
-package org.jzz.study;
+package org.jzz.study.net;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

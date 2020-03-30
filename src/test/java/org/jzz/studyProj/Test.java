@@ -11,8 +11,6 @@ import org.jzz.study.DataStructure.HuffmanTree;
 import org.jzz.study.DataStructure.Tree;
 import org.jzz.study.util.Print;
 
-import com.mysql.jdbc.Driver;
-
 
 public class Test {
 	
