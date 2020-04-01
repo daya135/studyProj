@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import org.jzz.study.DataStructure.BaseNode;
 import org.jzz.study.DataStructure.HuffmanTree;
@@ -97,7 +99,7 @@ public class Test {
 //        }
 		
 		Print.printArr(c, "\n");
-		
+
 		
 	}
 }

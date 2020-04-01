@@ -1,4 +1,4 @@
-package org.jzz.study.test;
+package org.jzz.study.junit;
 import org.junit.Test;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
@@ -16,7 +16,7 @@ JUnit 测试框架具有以下重要特性：
     包含收集执行测试用例结果的方法的测试结果
 */
 /** 测试运行器 用于执行测试案例  */
-public class TestJunitRunner {
+public class JunitTestRunner {
 	public static void main(String[] args) {
 		Result result = JUnitCore.runClasses(JunitTestSuite.class);
 		for(Failure failure : result.getFailures()) {
