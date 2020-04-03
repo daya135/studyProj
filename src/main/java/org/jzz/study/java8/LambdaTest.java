@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-//注解标示这是一个函数式接口
+//注解标示这是一个函数式接口,在编译上保证不会被新增方法
 @FunctionalInterface 
 interface FunInterface {
 	default void defaultFunc(){
@@ -15,35 +15,46 @@ interface FunInterface {
 		System.out.println("函数式接口允许static方法，因为static方法不能是抽象的");
 	}
 	
-	int value (int i); //只允许定义一个抽象方法
+	int func(int i, int j); //只允许定义一个抽象方法
+}
+
+@FunctionalInterface 
+interface FunInterface2 {
+	int value (int i); 
+//	int newFunc();	//不能再加方法
 }
 
 public class LambdaTest {
 	
-	int objfunc(int i) {
-		return i + 1;
+	int add(int i, int j) {
+		return i + j;
 	}
 	
-	static void testFunction(FunInterface fInterface, int i) {
+	static void testFunInterface1(FunInterface fInterface, int i) {
 		FunInterface.description();
 		fInterface.defaultFunc();
-		System.out.println(fInterface.value(i));
+		System.out.println(fInterface.func(i, 2));
 	}
 	
 	public static void main(String[] args) {
 		List<String> list = Arrays.asList("aa","cc","bb");
-		Collections.sort(list, (a,b)->a.compareTo(b));	 //Lambda表达式，函数体只有一行代码的可以去掉花括号和return表达式
+		Collections.sort(list, (a,b)->a.compareTo(b));	 //注意这里, 编译器根据sort函数的参数决定的要实现的接口, 所以此处箭头函数的返回值要根据Comparator接口的覆写规则来
 		System.out.println(list);
 		
-		FunInterface fInterface = i -> i + 1;	//通过Lambda表达式支持函数式接口
-		testFunction(fInterface, 1);
+		FunInterface fInterface = (i, j) -> {	//通过Lambda表达式实现函数式接口,可支持写多行代码,就跟Es6的形式一样
+			i = i++;
+			++j;
+			return i * j;	
+		};
+		testFunInterface1((i, j) -> i - j, 1);	//将函数当作参数传入,编译器自动构建为对象
 		
-		FunInterface fInterface2 = Integer::valueOf; // ::关键字 通过静态方法引用完成函数式接口实例化
+		LambdaTest lambdaTest = new LambdaTest();
+		fInterface = lambdaTest::add;// ::关键字 也可以用对象的方法完成函数式接口实例化
+		System.out.println(fInterface.func(1, 2));
+		
+		FunInterface2 fInterface2 = Integer::valueOf; // ::关键字 通过静态方法引用完成函数式接口实例化
 		System.out.println(fInterface2.value(1));
-		
-		LambdaTest lTest = new LambdaTest();
-		FunInterface fInterface3 = lTest::objfunc;// ::关键字 也可以用对象的方法完成函数式接口实例化
-		System.out.println(fInterface3.value(1));
+
 	}	
 }
 /*

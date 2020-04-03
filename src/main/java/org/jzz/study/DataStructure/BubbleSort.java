@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.jzz.study.util.Print;
+import org.jzz.study.util.CompareUtil;
 
 
 /* 泛型排序方法版本一 
@@ -45,30 +46,15 @@ public class BubbleSort <T>{
 		}
 	}
 	
-	/* 为测试类型配置的比较器 */
-	class CompareStr implements Comparator<String> {
 
-		@Override
-		public int compare(String o1, String o2) {
-			return o1.compareTo(o2);
-		}
-	}
-	class CompareInt implements Comparator<Integer> {
-
-		@Override
-		public int compare(Integer o1, Integer o2) {
-			// TODO Auto-generated method stub
-			return o1.compareTo(o2);
-		}
-	}
 	
 	public static void main(String[] args) {
 		BubbleSort<String> bubbleSort = new BubbleSort<>();
 		//List<String> list = Arrays.asList("aab", "cbb", "bcc");	//产生基于固定数组的定长容器(fix-size)，不支持增删
 		List<String> list = new ArrayList<>(Arrays.asList("aab", "cbb", "bcc")); //这样容器变成可变长容器了！
 		list.add("dd");
-		Comparator compareStr = bubbleSort.new CompareStr();
-		Comparator compareInt = bubbleSort.new CompareInt();
+		Comparator<String> compareStr = new CompareUtil.StringComparator();
+		Comparator<Integer> compareInt = new CompareUtil.IntegerComparator();
 		Print.print(list);
 		bubbleSort.Sort(list, compareStr);
 		Print.print(list);
@@ -76,7 +62,7 @@ public class BubbleSort <T>{
 		
 		
 		Integer[] integers = {1,3,2,5,4};
-		BubbleSort.Sort(integers, compareInt); //使用泛型方法对数组排序
+		BubbleSort.Sort(integers, compareInt); //使用String泛型参数声明的对象来排序整型
 		Print.print(Arrays.asList(integers));
 		
 	}
