@@ -117,7 +117,6 @@ public class ThreadPoolExecutorTest {
 		
 		executor.shutdown();//已经提交的线程会继续执行，新来的线程会被拒绝. 不 执行这句则主线程不会结束
 	}
-	
 }
 
 /** 
@@ -183,7 +182,6 @@ class MyIgnorePolic implements RejectedExecutionHandler{
 	private void doLog(Runnable r, ThreadPoolExecutor e) {
 		Print.print(r.toString() + " has been rejected");
 	}
-	
 }
 
 

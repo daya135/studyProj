@@ -20,7 +20,7 @@ class Waiter {
 	public synchronized boolean applyForks() {
 		while (forks < 2) {
 			try {
-				wait();
+				wait();	//进入waiting状态，等待唤醒
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -30,7 +30,7 @@ class Waiter {
 	}
 	public synchronized void returnForks() {
 		forks = forks + 2;
-		notifyAll();
+		notifyAll();	//唤醒所有
 	}
 }
 //哲学家类

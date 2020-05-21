@@ -8,6 +8,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+/** 
+ * 多线程赛马游戏，使用CyclicBarrier、Executor实现
+ * */
 class Horse implements Runnable {
 	private static int counter = 0;
 	private final int id = counter++;

@@ -14,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
 import org.jzz.study.util.Print;
+import org.jzz.study.util.PropertiesHolder;
 
 /**
  * @author jzz
@@ -23,33 +24,30 @@ public class PoolDataSource {
 	private ReentrantLock lock = new ReentrantLock();
 	private List<PoolConnection> list = Collections.synchronizedList(new ArrayList<PoolConnection>());
 	
-	private final static String DRIVER_CLASS = PropertiesHolder.getInstance().getProperty("jdbc.driver_class");
-	private final static String URL = PropertiesHolder.getInstance().getProperty("jdbc.url");
-	private final static String USERNAME = PropertiesHolder.getInstance().getProperty("jdbc.username");
-	private final static String PASSWORD = PropertiesHolder.getInstance().getProperty("jdbc.password");
+	private final String DRIVER_CLASS;
+	private final String URL;
+	private final String USERNAME ;
+	private final String PASSWORD;
+	private final int initSize;
+	private final int  maxSize;
+	private final int  stepSize;
+	private final int  timeout;
 	
-	//定义默认连接池属性配置
-	private int initSize = 2;
-	private int maxSize = 4;
-	private int stepSize = 1;
-	private int timeout = 2000;
-	
-	public PoolDataSource() {
+	public PoolDataSource() throws Exception {
+		Properties prop = PropertiesHolder.getProperties("config.properties");
+		DRIVER_CLASS = prop.getProperty("jdbc.driver_class");
+		URL = prop.getProperty("jdbc.url");
+		USERNAME = prop.getProperty("jdbc.username");
+		PASSWORD = prop.getProperty("jdbc.password");
+		initSize = Integer.valueOf(prop.getProperty("jdbc.initSize"));
+		maxSize = Integer.valueOf(prop.getProperty("jdbc.stepSize"));
+		stepSize = Integer.valueOf(prop.getProperty("jdbc.maxSize"));
+		timeout = Integer.valueOf(prop.getProperty("jdbc.timeout"));
 		initPool();
 	}
 	
 	//初始化连接池
 	private void initPool() {
-		String init = PropertiesHolder.getInstance().getProperty("initSize");
-		String step = PropertiesHolder.getInstance().getProperty("stepSize");
-		String max = PropertiesHolder.getInstance().getProperty("maxSize");
-		String time = PropertiesHolder.getInstance().getProperty("timeout");
-		
-		initSize = init==null? initSize : Integer.parseInt(init);
-		maxSize = max==null? maxSize : Integer.parseInt(max);
-		stepSize = step==null? stepSize : Integer.parseInt(step);
-		timeout = time==null? timeout : Integer.parseInt(time);
-		
 		try {
 			Class.forName(DRIVER_CLASS);
 		} catch (Exception e) {
@@ -110,23 +108,3 @@ public class PoolDataSource {
 
 }
 
-//配置文件类
-class PropertiesHolder {
-	private static Properties pro = new Properties();
-	static{
-		try {
-			String pathString = PropertiesHolder.class.getResource("/").getPath();//只到达包所在的路径
-//			String pathString = PropertiesHolder.class.getResource("").getPath();//到达class文件目录下
-			Print.print("properties path: " + pathString);
-			pro.load(new FileInputStream(pathString + "/datasource.properties"));	//maven将配置文件放到项目根目录（目标文件夹）
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public static Properties getInstance() {
-		return pro;
-	}
-}

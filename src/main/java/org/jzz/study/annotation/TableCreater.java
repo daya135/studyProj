@@ -7,8 +7,8 @@ public class TableCreater {
 	public static String CreateTable(String className) throws ClassNotFoundException {
 		String Sql = "CREATE TABLE ";
 		Class<?> cl = Class.forName(className);
-		DBTable dbTable = cl.getAnnotation(DBTable.class);
-		Sql += dbTable.name() == "" ? className.toUpperCase() : dbTable.name();
+		DBTable dbTable = cl.getAnnotation(DBTable.class);	//此处传入的参数就相当于key,以查找目标类获得对应注解对象
+		Sql += dbTable.name() == "" ? className.toUpperCase() : dbTable.name();	//调用注解对象的方法，获得一些信息
 		Sql += " (\n"; 
 		for (Field field : cl.getDeclaredFields()) {
 			Annotation[] annotations = field.getAnnotations();
@@ -39,7 +39,7 @@ public class TableCreater {
 		return Sql;
 	}
 	
-	private static String ProcessConstrains(Constrains con) {
+	public static String ProcessConstrains(Constrains con) {
 		String constrains = "";
 		if (!con.allowNull()) {
 			constrains += " NOT NULL";

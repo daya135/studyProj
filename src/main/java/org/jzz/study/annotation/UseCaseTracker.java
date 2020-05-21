@@ -2,7 +2,6 @@ package org.jzz.study.annotation;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -12,7 +11,7 @@ public class UseCaseTracker {
 			UseCase uc = method.getAnnotation(UseCase.class);
 			if (uc != null) {
 				System.out.println("Found Use Case:" + uc.id() + " " + uc.description());
-				useCases.remove(new Integer(uc.id()));
+				useCases.remove(Integer.valueOf(uc.id()));
 			}
 		}
 		for (int i : useCases) {

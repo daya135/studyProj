@@ -7,7 +7,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 @Retention(RUNTIME)
-@Target(TYPE)
+@Target(TYPE)	//ElementType.TYPE：类、接口或枚举声明
 public @interface DBTable {
 	public String name() default ""; //用空串代表元素不存在
 }

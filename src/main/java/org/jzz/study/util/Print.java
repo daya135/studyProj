@@ -215,9 +215,9 @@ public class Print {
 		
 		try {
 			for (int i = 0; i < Array.getLength(arr); i++) { //nb!!!此方法支持任何类型数组！！ps：是一个native方法
+//				System.out.println(arr.getClass().isPrimitive());	//判断原始数据类型，但是没用，貌似被Array类包装了～
 				Object obj = Array.get(arr, i);	//nb!!!此方法支持任何类型数组！！ps：是一个native方法
 				Object content = obj;
-//				object.getClass().isPrimitive();	//判断原始数据类型，但是没用，貌似被Array类包装了～
 				if (fucName != null){	
 					Method method = obj.getClass().getMethod(fucName, null);
 					content = (String) method.invoke(Array.get(arr, i), null);
@@ -232,12 +232,12 @@ public class Print {
 		}
 	}
 	
-	/** 一个打印任意类型数组的方法
-	 * @param arr 数组对象
-	 * @param splitStr 分隔符
-	 */
 	public static void printArr(Object arr, String splitStr) { 
 		printArr(arr, null, splitStr);
+	}
+	
+	public static void printArr(Object arr) { 
+		printArr(arr, null, " ");
 	}
   
 } ///:~

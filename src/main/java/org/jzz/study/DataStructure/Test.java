@@ -2,7 +2,14 @@ package org.jzz.study.DataStructure;
 
 import java.io.IOException;
 
+import org.apache.xalan.xsltc.compiler.Template;
+import org.jzz.study.algorithm.packproblem;
 import org.jzz.study.util.Print;
+
+import com.sun.accessibility.internal.resources.accessibility;
+import com.sun.mail.handlers.text_html;
+
+import sun.tools.jar.resources.jar;
 
 public class Test {
 	static void swap(int a[], int i, int j) {
@@ -12,23 +19,21 @@ public class Test {
 	}
 	
 	static int[] getNext(String str) {
-		char[] c = str.toCharArray();
-		int[] next = new int[c.length];
-		int k = -1;
+		char c[] = str.toCharArray();
+		int next[] = new int[c.length];
 		next[0] = -1;
-		int i = 0;
-		while (i < c.length - 1){
-			if (k == -1 || c[k] == c[i]) {
-				k++;
-				i++;
-				next[i] = k;
+		int k = -1;
+		int j = 0;
+		while (j < c.length - 1) {
+			if (k == -1 || c[j] == c[k]) {
+				next[++j] = ++k;
 			} else {
 				k = next[k];
 			}
 		}
-	
 		return next;
 	}
+	
 	
 //	static final int capacity = 8;
 //	static final int num = 4;
@@ -54,22 +59,23 @@ public class Test {
 //			System.in.read();
 //		}
 //		sort(a);
+//		sort(a, 1);
 //		shellSort(a, steps);
 //		devideSort(a, 0, a.length - 1, new int[a.length]);
 //		quickSort(a, 0, a.length - 1);
 //		heapSort(a);
-		
-//		Print.PrintIntArr(getNext("ABACDABABH"));
+		//测试kmp
+		Print.printArr(getNext("ABACDABABH"));	
 //		FindMax();
 //		findWhy(max_i, max_j);
 //		findQueen(new int[SIZE], 0);
 		
-		Print.PrintIntArr(getNext(pString));
+//		Print.PrintIntArr(getNext(pString));
 		
 		char[] c = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'};
 		int[] w = {2, 10, 3, 7, 5, 8, 9, 1, 6};
 		int len = 9;
-		HuffmanTree hufftree = new HuffmanTree();
+//		HuffmanTree hufftree = new HuffmanTree();
 //		hufftree.createTree(c, w, len);
 //		Print.print(System.currentTimeMillis());
 //		printTree(hufftree.root);

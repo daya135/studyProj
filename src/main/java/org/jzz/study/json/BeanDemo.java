@@ -6,7 +6,7 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 /* jackson默认的字段属性发现规则如下：
- * 所有被public修饰的字段->所有被public修饰的getter->所有被public修饰的setter  ！！！！！！
+ * 所有被public修饰的字段->public getter-> public setter  ！！！！！！
  * 在生产中要注意字段名称的映射！！！
 */
 public class BeanDemo {

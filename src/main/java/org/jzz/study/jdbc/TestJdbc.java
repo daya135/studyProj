@@ -25,7 +25,7 @@ public class TestJdbc {
 		con.close();
 	}
 	
-	static void testPoolDataSource() {
+	static void testPoolDataSource() throws Exception {
 		int ThreadCount = 20;
 		PoolDataSource dataSource = new PoolDataSource();
 		CountDownLatch latch = new CountDownLatch(ThreadCount);

@@ -30,7 +30,18 @@ public class ReflectTest {
 		Print.print("getDeclaredMethods: " + methods2.length);
 		Print.printArr(methods2, "\n");
 		
-		methods[0].invoke(obj, 100);	//通过反射调用方法
+		for (Method method : methods2) {
+			int modifier = method.getModifiers();	//获得属性或方法声明，用一位整数记录多个声明如：public static final xxx
+			Print.print(method);
+	        System.out.println("m2 isPublic: " + (modifier&1)); 
+	        System.out.println("m2 isPrivate: " + (modifier&2)); 
+	        System.out.println("m2 isProtected: " + (modifier&4)); 
+	        System.out.println("m2 isStatic: " + (modifier&8)); 
+	        System.out.println("m2 isFinal: " + (modifier&16)); 
+			if (method.getParameterCount() == 1 && ((modifier&1) == 1) && (method.getParameters())[0].getType().equals(int.class)) {
+				method.invoke(obj, 100);	//通过反射调用方法
+			}
+		}
 		Print.print(((TestReflectClass)obj).getString());	//强制转换，显示调用方法
 		
 	}

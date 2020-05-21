@@ -14,14 +14,12 @@ interface FunInterface {
 	static void description() {
 		System.out.println("函数式接口允许static方法，因为static方法不能是抽象的");
 	}
-	
 	int func(int i, int j); //只允许定义一个抽象方法
 }
 
 @FunctionalInterface 
 interface FunInterface2 {
 	int value (int i); 
-//	int newFunc();	//不能再加方法
 }
 
 public class LambdaTest {
