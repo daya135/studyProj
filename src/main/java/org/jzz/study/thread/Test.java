@@ -63,18 +63,21 @@ public class Test {
 		thread.start();
 		
 		Thread.sleep(3000); 
-		thread.suspend();
-//		lock.key = "stop";	//挂起线程
+//		thread.suspend();	//挂起：法一
+		lock.key = "stop";	//挂起：法二
+		Print.print("suspend thread" + new Date());
 		Thread.sleep(3000);
-		thread.resume();
-//		synchronized (lock) {
-//			lock.key = "run";	
-//			lock.notifyAll();	//唤醒线程
-//		}
+//		thread.resume();	//唤醒：法一
+		Print.print("resume thread" + new Date());
+		synchronized (lock) {
+			lock.key = "run";	
+			lock.notifyAll();	//唤醒：法二
+		}
 	}
 	
 	public static void main(String[] args) throws Exception {
 //		testHashMapUnsafe();
+		testWaitAndAwake();
 		
 	}
 }

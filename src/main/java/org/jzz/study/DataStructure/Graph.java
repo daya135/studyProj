@@ -330,7 +330,9 @@ public class Graph {
 		graph.connect(1, 2, 4D);
 		graph.connect(1, 8, 8D);
 		graph.connect(2, 7, 8D);
+		graph.connect(0, 2, 6D);
 		graph.connect(2, 3, 4D);
+		graph.connect(1, 3, 8D);
 		graph.connect(3, 4, 4D);
 		graph.connect(3, 6, 8D);
 		graph.connect(4, 5, 8D);

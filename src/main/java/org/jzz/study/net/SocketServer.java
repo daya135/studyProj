@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -50,12 +51,16 @@ public class SocketServer {
 		private Socket socket;
 		private BufferedReader in = null;
 		private String msg = "";
+		private String clientAddress;
+		private int clientPort;
 		
 	    public ChatServer(Socket socket) {
 			this.socket = socket;
 			try {
 				in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-				msg = "用户:" + this.socket.getInetAddress()+ ":"+ this.socket.getPort() + "~加入了聊天室"  
+				clientAddress = this.socket.getInetAddress().toString();
+				clientPort = this.socket.getPort();
+				msg = "用户:" + clientAddress+ ":"+ clientPort + "~加入了聊天室. "  
                         +"当前在线人数:" + clientList.size(); 
 				this.sendmsg();
 			} catch (IOException e) {e.printStackTrace();}
@@ -69,8 +74,8 @@ public class SocketServer {
 						if ("bye".equals(msg)) {
                             clientList.remove(socket);
                             in.close();
-                            msg = "用户:" + socket.getInetAddress() + ":"+ this.socket.getPort() 
-                                    + "退出:" +"当前在线人数:"+clientList.size();  
+                            msg = "用户:" + clientAddress + ":"+ clientPort 
+                                    + "退出. " +"当前在线人数:"+clientList.size();  
                             System.out.println(msg);
                             this.sendmsg();
                             socket.close();
@@ -81,10 +86,16 @@ public class SocketServer {
 						}
 					}
 				}
-			} catch (IOException e) {e.printStackTrace();}
+			} catch (SocketException e) {
+				msg = "用户强制离线:" + clientAddress + ":" + clientPort; 
+				clientList.remove(socket);
+				this.sendmsg(); 
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		
-		//收到信息的服务端sokect为连接上服务端的每个客户端socket发送信息
+		//为连接上服务端的每个客户端socket发送信息
         public void sendmsg()
         {
             System.out.println(msg);

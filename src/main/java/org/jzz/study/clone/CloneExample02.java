@@ -14,7 +14,7 @@ import java.util.Date;
  * by jzz 2017-06-06
  */
 class Outer implements Serializable {
-	private final static long serialVersionUID = 369285298572940L;
+	private final static long serialVersionUID = 369285298572940L;	//此ID是用来判断类版本的，如果类更改了属性则要改动这个，让旧版本数据流序列化回来时抛出异常
 	
 	int a = 1;
 	String s = "outer";

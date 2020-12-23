@@ -1,6 +1,6 @@
 package org.jzz.study.DataStructure;
 
-/* 用于树的打印 */
+/* 二叉树节点 */
 public interface BaseNode {
 	BaseNode getLeft();
 	BaseNode getRight();

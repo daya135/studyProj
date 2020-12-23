@@ -13,12 +13,15 @@ public class TestJdbc {
 	
 	static void testJdbc() throws Exception{
 		Class.forName("com.mysql.cj.jdbc.Driver");
-		Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/robot?characterEncoding=utf8&serverTimezone=GMT%2B8","root","root"); 
-		PreparedStatement  statement =  con.prepareStatement("select * from t_device");
+		Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo?characterEncoding=utf8&serverTimezone=GMT%2B8","root","root"); 
+		PreparedStatement  statement =  con.prepareStatement("select * from aa");	//不存在的表会报异常
 		ResultSet resultset = statement.executeQuery();
+		if (resultset == null) {
+			Print.print("null table");	//空表不会生成空对象
+		}
 		while(resultset.next()) {
-			String deviceName = resultset.getString(2);
-			Print.print(deviceName);
+			String username = resultset.getString(2);	//下标从1开始
+			Print.print(username);
 		}
 		resultset.close();
 		statement.close();
@@ -56,9 +59,19 @@ public class TestJdbc {
 
 	}
 	
+	//prepareStatement使用示例
+	static void testPrepareStatment() {
+		String sql = "select * from xxx where a = ? and b = ? and time < ?";
+//		PreparedStatement stmt = conn.prepareStatement(sql);
+//        stmt.setInt(1, 61642);
+//        stmt.setString(2, "MT202");
+//        stmt.setDate(3, new Date(System.currentTimeMillis()));
+//		ResultSet resultSet = stmt.executeQuery();
+//		stmt.executeUpdate();
+	}
+	
 	public static void main(String[] args) throws Exception {
-//		testJdbc();	
-		testPoolDataSource();
+//		testPoolDataSource();
 		
 	}
 }
