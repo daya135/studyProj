@@ -2,14 +2,7 @@ package org.jzz.study.DataStructure;
 
 import java.io.IOException;
 
-import org.apache.xalan.xsltc.compiler.Template;
-import org.jzz.study.algorithm.packproblem;
 import org.jzz.study.util.Print;
-
-import com.sun.accessibility.internal.resources.accessibility;
-import com.sun.mail.handlers.text_html;
-
-import sun.tools.jar.resources.jar;
 
 public class Test {
 	static void swap(int a[], int i, int j) {

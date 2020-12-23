@@ -5,7 +5,6 @@ import java.util.Queue;
 
 import org.jzz.study.util.Print;
 
-import javafx.util.Pair;
 
 /** 二叉树最大深度 */
 public class LC104_TreeDepth {
@@ -46,4 +45,31 @@ public class LC104_TreeDepth {
 		depth = maxDepth_dfs(root);
 		Print.print(depth);
 	 }
+}
+
+class Pair<T ,V> {
+	private T key;
+	private V value;
+	
+	public Pair(T t, V v) {
+		this.setKey(t);
+		this.setValue(v);
+	}
+
+	public V getValue() {
+		return value;
+	}
+
+	public void setValue(V value) {
+		this.value = value;
+	}
+
+	public T getKey() {
+		return key;
+	}
+
+	public void setKey(T key) {
+		this.key = key;
+	}
+	
 }
