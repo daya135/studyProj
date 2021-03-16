@@ -20,7 +20,7 @@ public class LC206_reverseList {
         return node;
     }
 	
-	/** 正常版本，递归 */
+	/** 正常版本，递归， 这个很难理解，建议查询知乎https://zhuanlan.zhihu.com/p/86745433*/
 	public static ListNode reverseList_2(ListNode head) {
         if (head== null || head.next == null) {
             return head;
@@ -47,6 +47,7 @@ public class LC206_reverseList {
 		return cur;
 	}
 	
+	/** 堆栈法*/
 	public static ListNode reverseList_stack(ListNode head) {
 		Stack<ListNode> stack = new Stack<ListNode>();
 		while (head != null) {
@@ -66,7 +67,7 @@ public class LC206_reverseList {
 	
 	public static void main(String[] args) {
 		ListNode root = ListNode.createList(new Integer[] {1,2,3,4,5});
-		ListNode tail = reverseList_3(root);
+		ListNode tail = reverseList_2(root);
 		while(tail != null) {
 			Print.print(tail.val);
 			tail = tail.next;

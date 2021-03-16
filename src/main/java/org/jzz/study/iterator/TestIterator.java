@@ -13,5 +13,9 @@ public class TestIterator {
 		while (iterator.hasNext()) {
 			Print.print(iterator.next());
 		}
+		
+		for (Object obj : collection) {
+			Print.print(obj);
+		}
 	}
 }

@@ -24,7 +24,7 @@ public class MyIterator implements Iterator<Object>{
 	public Object next() {
 		if (hasNext()) {
 			pos++;
-			return collection.get(pos);
+			return collection.get(pos) + " from MyIterator";
 		}
 		return null;
 	}

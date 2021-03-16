@@ -98,7 +98,7 @@ public class SocketServer {
 		//为连接上服务端的每个客户端socket发送信息
         public void sendmsg()
         {
-            System.out.println(msg);
+//            System.out.println(msg);
             int num = clientList.size();
             for(int index = 0; index < num; index++)
             {
