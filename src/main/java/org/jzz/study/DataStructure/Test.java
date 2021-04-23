@@ -1,17 +1,12 @@
 package org.jzz.study.DataStructure;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
 import org.jzz.study.algorithm.TreeNode;
 import org.jzz.study.util.Print;
-
-import com.mysql.cj.x.protobuf.MysqlxCrud.Find;
-import com.sun.mail.handlers.text_html;
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 
 public class Test {
 	static void swap(int a[], int i, int j) {
@@ -82,69 +77,7 @@ public class Test {
 //	}
 	
     
-	    
-	    public static boolean isBadVersion(int n) {
-	    	if (n >= 4) return true;
-	    	return false;
-	    }
-
-	    public static int firstBadVersion(int n) {
-	    	   int min = 1;
-	   	    int max = n;
-	   	    while (min < max) {
-	               int idx = min + (max - min) / 2;
-	               if (isBadVersion(idx)) {
-	                   max = idx;
-	               } else {
-	                   min = idx + 1;
-	               }
-	           }
-	   	    return min;
-	     }
-	    	
-	    
-	   static class Solution {
-	        int[] origin;
-	        int[] nums;
-	        Random random = new Random(System.currentTimeMillis());
-
-	        public Solution(int[] nums) {
-	            this.nums = nums;
-	            this.origin = new int[nums.length];
-	            for (int i = 0; i < nums.length; i++) {
-	                this.origin[i] = nums[i];
-	            }
-	        }
-	        
-	        /** Resets the array to its original configuration and return it. */
-	        public int[] reset() {
-	            for (int i = 0; i < this.nums.length; i++) {
-	                this.nums[i] = this.origin[i];
-	            }
-	            return this.nums;
-	        }
-	        
-	        /** Returns a random shuffling of the array. */
-	        public int[] shuffle() {    
-	            
-	    		for (int i = 0; i < this.nums.length; i++) {
-	                int idx = random.nextInt(this.nums.length - i) + i;
-	                int temp = this.nums[idx];
-	                this.nums[idx] = this.nums[i];
-	                this.nums[i] = temp;
-	            }
-	            return this.nums;
-	        }
-	    }
-
-	    /**
-	     * Your Solution object will be instantiated and called as such:
-	     * Solution obj = new Solution(nums);
-	     * int[] param_1 = obj.reset();
-	     * int[] param_2 = obj.shuffle();
-	     */    
-	     
-	    
+	
 	
 	public static void main(String[] args) throws IOException {
 //		int a[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
@@ -183,11 +116,5 @@ public class Test {
 		TreeNode tree = TreeNode.createTree(new Integer[] {3,9,20,null,null,15,7});
 		
 		int[] nums  = {1, 2, 3};
-		Solution solution = new Solution(nums);
-		for (int i = 0; i < 100 ; i++) 
-		Print.printArr(solution.shuffle());
-		 List<Integer> list = new LinkedList<>();
-		Integer integer  = 1;
-		Print.print(integer.bitCount(10));
 	}
 }
