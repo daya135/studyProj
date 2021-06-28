@@ -44,7 +44,7 @@ public class LambdaTest {
 			++j;
 			return i * j;	
 		};
-		testFunInterface1((i, j) -> i - j, 1);	//将函数当作参数传入,编译器自动构建为对象
+		testFunInterface1((i, j) -> i - j, 1);	//将函数当作参数传入,编译器自动构建为对象（这里隐藏了一个自动类型推断！！）
 		
 		LambdaTest lambdaTest = new LambdaTest();
 		fInterface = lambdaTest::add;// ::关键字 也可以用对象的方法完成函数式接口实例化

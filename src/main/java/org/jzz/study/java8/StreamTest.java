@@ -78,21 +78,26 @@ public class StreamTest {
 	
 	/** 流的中间操作 */
 	public static void midOperation() {
+		//filter:Predicate接口
 		//过滤、去重、跳过、分页等中间操作
 		Stream<?> stream = getList().stream().filter(item -> item.type == "a").distinct().skip(2).limit(1);
+		//forEach:Comsumer接口
 		stream.forEach(System.out::print);
 		Print.print();
+		//map:Function接口
 		//map：接收一个函数作为参数，该函数会被应用到每个元素上，并将其映射成一个新的元素（Function表达式需要返回值）。
 		getList().stream().map(item->{	
 			item.value = item.value * 10;
 			return item;
 		}).forEach(System.out::print);		
 		Print.print();
+		//peek:Consumer接口
 		//peek：如同于map，能得到流中的每一个元素。但map接收的是一个Function表达式，有返回值；而peek接收的是Consumer表达式，没有返回值。
 		getList().stream().peek(item->{	
 			item.value = item.value * 10;
 		}).forEach(System.out::print);		
 		Print.print();
+		//flatMap:Function接口
 		// flatMap：接收一个函数作为参数，将流中的每个值都换成另一个流，然后把所有流连接成一个流。
 		List<String> list = Arrays.asList("a,b,c", "1,2,3");
 		list.stream().flatMap(s->{
@@ -101,8 +106,8 @@ public class StreamTest {
 			return stream2;
 		}).forEach(Print::printnb);
 		Print.print();
+		//sorted(Comparator com)：定制排序，自定义Comparator排序器  
         //sorted()：自然排序，流中元素需实现Comparable接口, 略
-        //sorted(Comparator com)：定制排序，自定义Comparator排序器  
 		getList().stream().sorted((item1, item2)->{
 			return item1.value - item2.value;
 		}).forEach(System.out::print);
