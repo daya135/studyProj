@@ -2,7 +2,13 @@ package org.jzz.study.java8;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
+
+import javax.security.auth.x500.X500Principal;
+
+import com.mongodb.Function;
 
 //注解标示这是一个函数式接口,在编译上保证不会被新增方法
 @FunctionalInterface 
@@ -52,7 +58,12 @@ public class LambdaTest {
 		
 		FunInterface2 fInterface2 = Integer::valueOf; // ::关键字 通过静态方法引用完成函数式接口实例化
 		System.out.println(fInterface2.value(1));
-
+		
+		Function<Integer, String> func = x -> String.valueOf(x);	//使用内建的接口定义功能
+		System.out.println(func.apply(1024));
+		
+		
+		list.sort(Comparator.comparingInt(Integer::parseInt));
 	}	
 }
 /*
