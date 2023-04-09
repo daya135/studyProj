@@ -9,7 +9,6 @@ import java.util.List;
 
 import org.jzz.study.util.Null;
 
-
 /** 代理类，将一切robot实例代理成NullRobot */
 class NullRobotProxyHandler implements InvocationHandler{
 	private String nullName;
@@ -40,15 +39,13 @@ class NullRobotProxyHandler implements InvocationHandler{
 }
 
 public class RobootProxyTest {
-	
+
 	/* 返回一个代理对象 */
 	public static Robot newNullRobot(Class<? extends Robot> type) {
-		return (Robot)Proxy.newProxyInstance(
-				RobootProxyTest.class.getClassLoader(), 
-				new Class[]{ Null.class, Robot.class },
-				new NullRobotProxyHandler(type));
+		return (Robot) Proxy.newProxyInstance(RobootProxyTest.class.getClassLoader(),
+				new Class[] { Null.class, Robot.class }, new NullRobotProxyHandler(type));
 	}
-	
+
 	public static void main(String[] args) {
 		System.out.println("代理前。。。");
 		Robot.Test.test(new SnowRemovalRobot("SnowBee"));

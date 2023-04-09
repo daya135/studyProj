@@ -4,7 +4,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-//接口代理类的父类，其中rpcRuest()方法用于构建msgBean，并通过socket连接远程的服务获取方法调用结果
+//接口代理类的父类（正确的说这个类应该是代理功能的定义，这个类仅在javassist中充当了代理类的父类，如果用jdk代理，则可直接将方法挪到invocationhandler类中），
+//其中rpcRuest()方法用于构建msgBean，并通过socket连接远程的服务获取方法调用结果
 public class ProxyBase {
 	public static Object rpcQuest(String className, String methodName, String parmTypes, String returnType, Object[] args ) {
 		Object obj = null;

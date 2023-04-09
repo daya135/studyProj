@@ -1,6 +1,7 @@
 package org.jzz.study.net.rpc;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 //RPC消息传输实体
 public class MsgBean implements Serializable{
@@ -34,6 +35,11 @@ public class MsgBean implements Serializable{
 	}
 	public void setParams(Object[] params) {
 		this.params = params;
+	}
+	@Override
+	public String toString() {
+		return "MsgBean [className=" + className + ", methodName=" + methodName + ", methodParmType="
+				+ Arrays.toString(methodParmType) + ", params=" + Arrays.toString(params) + "]";
 	}
 	
 	
